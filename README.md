@@ -2,6 +2,10 @@
 
 A Blender script for generating buildings in the style of late Victorian rural England, using Chat GPT extensively.
 
+Work in progress!
+
+![The basic output as it stands](./docs/screenshots//basic-room.png)
+
 ## Getting Started
 
 To use the Victorian Building Generator, you will need to have Blender installed on your computer. You can download Blender for free from the [official website](https://www.blender.org/download/).
@@ -11,6 +15,41 @@ Once you have Blender installed, you can clone this repository and open the `sam
 ## Usage
 
 To generate a building, run the `Generate Building` operator in the 3D Viewport. This will generate a building in the style of late Victorian rural England. The generated building will be selected by default, and you can use the standard Blender tools to modify it as desired.
+
+## Docs
+
+<ul>
+<li><p><code>half(n)</code>: This function takes in a number <code>n</code> and returns half of that number.</p></li><li><p><code>pos_neg(n)</code>: This function takes in a number <code>n</code> and returns a dictionary with two keys: "pos" and "neg". The value for "pos" is the original value of <code>n</code>, and the value for "neg" is the negative of <code>n</code>.</p></li><li><p><code>foot(imperial_value)</code>: This function takes in an imperial value in feet and returns the equivalent value in meters.</p></li><li><p><code>cube_ft(width=1, depth=1, height=1, x=0, y=0, z=0)</code>: This function creates a cube with the specified dimensions in feet, and positions the cube at the specified coordinates. The dimensions and coordinates are converted to meters before creating the cube.</p></li><li><p><code>generate_room(width=6, height=10, depth=6, wall_thickness=1, floor_thickness=1)</code>: This function generates a room with the specified dimensions in feet, using the <code>cube_ft</code> function to create the walls, floor, and ceiling of the room. The room is centered at the origin, with the floor at the bottom. The wall thickness and floor thickness are also specified in feet.</p></li><li><p><code>Generate_Room_Operator</code>: This is a Blender operator class that is used to generate a room when the operator is run. The operator can be run by calling <code>bpy.ops.object.generate_room()</code> in the Blender Python console. When the operator is run, it calls the <code>generate_room</code> function to generate the room.</p></li></ul>
+
+examples
+
+```python
+# Calculate half of 10
+half(10)  # returns 5
+
+# Calculate the positive and negative values of 5
+pos_neg(5)  # returns {"pos": 5, "neg": -5}
+
+# Convert 3 feet to meters
+foot(3)  # returns 0.9144
+
+# Create a cube with dimensions 6x6x6 feet, positioned at (0, 0, 0)
+cube_ft(width=6, height=6, depth=6, x=0, y=0, z=0)
+
+# Generate a room with dimensions 30x10x40 feet, wall thickness of 0.75 feet, and floor thickness of 1 foot
+generate_room(
+  width=30,
+  depth=40,
+  height=10,
+  wall_thickness=.75
+)
+```
+
+To run the Generate Room operator, you can use the following code:
+
+```python
+bpy.ops.object.generate_room()
+```
 
 ## Contributing
 
