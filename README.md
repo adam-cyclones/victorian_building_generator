@@ -55,6 +55,12 @@ bpy.ops.object.generate_room()
 
 If you would like to contribute to the development of the Victorian Building Generator, you can submit a pull request with your changes. Please make sure to follow the existing coding style and include appropriate documentation for your changes.
 
+## Project Goals
+
+I persoanlly want to make game assets for this era, I am very interested in Godot, Unreal and VR in historical settings, I also live in rural England so victorian mining towns fasinate me, what am I shooting for? Here is some Dalle 2 generated assets to inspire:
+
+![poor class living room](./docs/artwork/victorian era living room poor nursury.png)
+
 ## Development
 
 To run the Victorian Building Generator through the Visual Studio Blender Development plugin, you will need to have both Blender and Visual Studio installed on your computer.
