@@ -59,7 +59,7 @@ If you would like to contribute to the development of the Victorian Building Gen
 
 I persoanlly want to make game assets for this era, I am very interested in Godot, Unreal and VR in historical settings, I also live in rural England so victorian mining towns fasinate me, what am I shooting for? Here is some Dalle 2 generated assets to inspire:
 
-![poor class living room](./docs/artwork/victorian era living room poor nursury.png)
+![poor class living room](./docs/artwork/victorian%20era%20living%20room%20poor%20nursury.png)
 
 ## Development
 
