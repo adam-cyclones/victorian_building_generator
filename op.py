@@ -1,5 +1,6 @@
 import csv
 import bpy
+import os
 from . import util_strings as strings
 from . import util_math as math
 from . import util_geom as geom
@@ -83,6 +84,12 @@ def generate_building(
     floors=1
 ):
     def generate(data):
+
+        with open(data, newline='') as csvfile:
+            model_reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            for row in model_reader:
+                print(', '.join(row))
+
         bpy.ops.object.empty_add(
             type='PLAIN_AXES',
             align='WORLD',
@@ -118,13 +125,16 @@ def generate_building(
             )
     match preset:
         case "Lower Class":
-            data = "models/lower class/rooms.csv"
+            data = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)) + "/models/lower class/rooms.csv")
             generate(data)
         case "Middle Class":
-            data = "models/middle class/rooms.csv"
+            data = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)) + "/models/middle class/rooms.csv")
             generate(data)
         case "Upper Class":
-            data = "models/upper class/rooms.csv"
+            data = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)) + "/models/upper class/rooms.csv")
             generate(data)
         case _:
             print(f"{preset} is not a supported preset")
