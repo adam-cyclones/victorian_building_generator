@@ -21,7 +21,7 @@ def foot(imperial_value):
 # bpy.ops.object.generate_room()
 
 
-def cube_ft(width=1, depth=1, height=1, x=0, y=0, z=0, name='cube_ft'):
+def cube_ft(parent, width=1, depth=1, height=1, x=0, y=0, z=0, name='cube_ft'):
     # x, y, x are half
     bpy.ops.mesh.primitive_cube_add(
         size=foot(1),
@@ -31,6 +31,8 @@ def cube_ft(width=1, depth=1, height=1, x=0, y=0, z=0, name='cube_ft'):
     )
     bpy.context.active_object.name = name
     bpy.context.object.scale = (1 * width, 1 * depth, 1 * height)
+    if parent:
+        bpy.data.objects[name].parent = parent
 
 
 def add_floor_suffix(number):
@@ -47,12 +49,14 @@ def add_floor_suffix(number):
 
 
 def generate_room(
-        width=6,
-        height=10,
-        depth=6,
-        wall_thickness=1,
-        floor_thickness=1,
-        collection="Scene Collection"
+    parent,
+    width=6,
+    height=10,
+    depth=6,
+    wall_thickness=1,
+    floor_thickness=1,
+    collection="Scene Collection",
+    z=0
 ):
     # Width is equal too: |E| <-- x/2 --> |W|
     # Walls have origin center but to total width, height, depth we gave needs to be achieved, we need to offset the wall thickness by half via subtraction
@@ -66,44 +70,49 @@ def generate_room(
     #
     # East wall
     cube_ft(
+        parent,
         name=f"{collection}.East wall",
         width=wall_thickness,
         height=height,
         depth=depth - (wall_thickness * 2),
-        z=height / 2,
+        z=height / 2 + z,
         x=half(pos_neg(width)["pos"]) - half(wall_thickness))
     # West wall
     cube_ft(
+        parent,
         name=f"{collection}.West wall",
         width=wall_thickness,
         height=height,
         depth=depth - (wall_thickness * 2),
-        z=height / 2,
+        z=height / 2 + z,
         x=half(pos_neg(width)["neg"]) + half(wall_thickness))
     # North wall
     cube_ft(
+        parent,
         name=f"{collection}.North wall",
         width=width,
         height=height,
         depth=wall_thickness,
-        z=height / 2,
+        z=height / 2 + z,
         y=half(pos_neg(depth)["pos"]) - half(wall_thickness)
     )
     # South wall
     cube_ft(
+        parent,
         name=f"{collection}.South wall",
         width=width,
         height=height,
         depth=wall_thickness,
-        z=height / 2,
+        z=height / 2 + z,
         y=half(pos_neg(depth)["neg"]) + half(wall_thickness))
     # Floor
     cube_ft(
+        parent,
         name=f"{collection}.Floor",
         width=width - wall_thickness * 2,
         height=floor_thickness - wall_thickness * 2,
         depth=depth - wall_thickness * 2,
-        z=floor_thickness / 2,
+        z=floor_thickness / 2 + z,
         y=0
     )
 
@@ -120,17 +129,31 @@ def generate_building(
             scale=(1, 1, 1),
         )
         bpy.context.active_object.name = f'{preset} Building'
+        building_root = bpy.data.objects[f'{preset} Building']
         for floor in range(floors):
             if (floor == 0):
                 floor = (floor, 'Ground')
             else:
                 floor = (floor, add_floor_suffix(floor))
+            # Add an empty
+            bpy.ops.object.empty_add(
+                type='PLAIN_AXES',
+                align='WORLD',
+                location=(0, 0, 0),
+                scale=(1, 1, 1),
+            )
+            # Set a Name for the empty
+            bpy.context.active_object.name = f'{floor[1]} Floor'
+            # Assign parent to the building
+            bpy.data.objects[f'{floor[1]} Floor'].parent = building_root
             generate_room(
+                parent=bpy.data.objects[f'{floor[1]} Floor'],
                 width=30,
                 depth=40,
                 height=10,
                 wall_thickness=.75,
-                collection=f"Floor {floor[1]}"
+                collection=f"Floor {floor[1]}",
+                z=floor[0] * 10
             )
     match preset:
         case "Lower Class":

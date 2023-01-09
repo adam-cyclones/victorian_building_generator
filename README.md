@@ -2,9 +2,15 @@
 
 A Blender script for generating buildings in the style of late Victorian rural England, using Chat GPT extensively.
 
-Work in progress!
+> Work in progress, Today you can generate `n` floors! thats it.
+>
+> A bin packing algorythm now should be developed including A\* to enisre a path, this is going to be hard! :D
 
 ![The basic output as it stands](./docs/screenshots//basic-room.png)
+_The basic output as it stands_
+
+![The outliner shows the objects are grouped in empties, from buidling root, nests a Ground floor, 1st Floor, then the outer walls](./docs/screenshots//basic-room.png)
+_The outliner shows the objects are grouped in empties, from buidling root, nests a Ground floor, 1st Floor, then the outer walls_
 
 ## Getting Started
 
