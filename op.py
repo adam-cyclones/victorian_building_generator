@@ -1,51 +1,11 @@
-import bpy
 import csv
-
-
-def half(n):
-    return n / 2
-
-
-def pos_neg(n):
-    calculated = {
-        "pos": n,
-        "neg": n * -1
-    }
-    return calculated
-
-
-def foot(imperial_value):
-    return imperial_value * 0.3048
+import bpy
+from . import util_strings as strings
+from . import util_math as math
+from . import util_geom as geom
 
 # Run with:
 # bpy.ops.object.generate_room()
-
-
-def cube_ft(parent, width=1, depth=1, height=1, x=0, y=0, z=0, name='cube_ft'):
-    # x, y, x are half
-    bpy.ops.mesh.primitive_cube_add(
-        size=foot(1),
-        location=(foot(x),
-                  foot(y),
-                  foot(z)),
-    )
-    bpy.context.active_object.name = name
-    bpy.context.object.scale = (1 * width, 1 * depth, 1 * height)
-    if parent:
-        bpy.data.objects[name].parent = parent
-
-
-def add_floor_suffix(number):
-    if number % 100 in (11, 12, 13):
-        return f"{number}th"
-    elif number % 10 == 1:
-        return f"{number}st"
-    elif number % 10 == 2:
-        return f"{number}nd"
-    elif number % 10 == 3:
-        return f"{number}rd"
-    else:
-        return f"{number}th"
 
 
 def generate_room(
@@ -59,7 +19,7 @@ def generate_room(
     z=0
 ):
     # Width is equal too: |E| <-- x/2 --> |W|
-    # Walls have origin center but to total width, height, depth we gave needs to be achieved, we need to offset the wall thickness by half via subtraction
+    # Walls have origin center but to total width, height, depth we gave needs to be achieved, we need to offset the wall thickness by math.half via subtraction
     # The East and West wall will slot within the North and South walls
     # _____
     # -----
@@ -69,44 +29,45 @@ def generate_room(
     # -----
     #
     # East wall
-    cube_ft(
+    geom.cube_ft(
         parent,
         name=f"{collection}.East wall",
         width=wall_thickness,
         height=height,
         depth=depth - (wall_thickness * 2),
         z=height / 2 + z,
-        x=half(pos_neg(width)["pos"]) - half(wall_thickness))
+        x=math.half(math.pos_neg(width)["pos"]) - math.half(wall_thickness))
     # West wall
-    cube_ft(
+    geom.cube_ft(
         parent,
         name=f"{collection}.West wall",
         width=wall_thickness,
         height=height,
         depth=depth - (wall_thickness * 2),
         z=height / 2 + z,
-        x=half(pos_neg(width)["neg"]) + half(wall_thickness))
+        x=math.half(math.pos_neg(width)["neg"]) + math.half(wall_thickness))
     # North wall
-    cube_ft(
+    geom.cube_ft(
         parent,
         name=f"{collection}.North wall",
         width=width,
         height=height,
         depth=wall_thickness,
         z=height / 2 + z,
-        y=half(pos_neg(depth)["pos"]) - half(wall_thickness)
+        y=math.half(math.pos_neg(depth)[
+            "pos"]) - math.half(wall_thickness)
     )
     # South wall
-    cube_ft(
+    geom.cube_ft(
         parent,
         name=f"{collection}.South wall",
         width=width,
         height=height,
         depth=wall_thickness,
         z=height / 2 + z,
-        y=half(pos_neg(depth)["neg"]) + half(wall_thickness))
+        y=math.half(math.pos_neg(depth)["neg"]) + math.half(wall_thickness))
     # Floor
-    cube_ft(
+    geom.cube_ft(
         parent,
         name=f"{collection}.Floor",
         width=width - wall_thickness * 2,
@@ -132,9 +93,9 @@ def generate_building(
         building_root = bpy.data.objects[f'{preset} Building']
         for floor in range(floors):
             if (floor == 0):
-                floor = (floor, 'Ground')
+                floor = (floor, '0 Ground')
             else:
-                floor = (floor, add_floor_suffix(floor))
+                floor = (floor, strings.add_floor_suffix(floor))
             # Add an empty
             bpy.ops.object.empty_add(
                 type='PLAIN_AXES',
@@ -175,6 +136,6 @@ class Generate_Room_Operator(bpy.types.Operator):
 
     def execute(self, context):
         generate_building(floors=3)
-        # cube_ft(width=6, height=6, depth=6)
+        # geom.cube_ft(width=6, height=6, depth=6)
 
         return {'FINISHED'}

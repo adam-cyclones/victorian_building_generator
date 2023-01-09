@@ -11,27 +11,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-bl_info = {
-    "name" : "victorian_building_generator",
-    "author" : "Adam Crockett",
-    "description" : "",
-    "blender" : (3,),
-    "version" : (0, 0, 1),
-    "location" : "",
-    "warning" : "",
-    "category" : "Generic"
-}
-
+# some_file.py
 import bpy
 from . import auto_load
 from . import op
 
+bl_info = {
+    "name": "victorian_building_generator",
+    "author": "Adam Crockett",
+    "description": "",
+    "blender": (3,),
+    "version": (0, 0, 1),
+    "location": "",
+    "warning": "",
+    "category": "Generic"
+}
+
+
 auto_load.init()
+
 
 def register():
     # Register the operator class
     bpy.utils.register_class(op.Generate_Room_Operator)
     auto_load.register()
+
 
 def unregister():
     # Unregister the operator class
