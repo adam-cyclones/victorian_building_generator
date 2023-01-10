@@ -1,9 +1,8 @@
 import csv
 import bpy
 import os
-from . import util_strings as strings
-from . import util_math as math
-from . import util_geom as geom
+from .src import rooms
+from .src.utils import geom, math_extra, strings
 
 # Run with:
 # bpy.ops.object.generate_room()
@@ -37,7 +36,7 @@ def generate_room(
         height=height,
         depth=depth - (wall_thickness * 2),
         z=height / 2 + z,
-        x=math.half(math.pos_neg(width)["pos"]) - math.half(wall_thickness))
+        x=math_extra.half(math_extra.pos_neg(width)["pos"]) - math_extra.half(wall_thickness))
     # West wall
     geom.cube_ft(
         parent,
@@ -46,7 +45,7 @@ def generate_room(
         height=height,
         depth=depth - (wall_thickness * 2),
         z=height / 2 + z,
-        x=math.half(math.pos_neg(width)["neg"]) + math.half(wall_thickness))
+        x=math_extra.half(math_extra.pos_neg(width)["neg"]) + math_extra.half(wall_thickness))
     # North wall
     geom.cube_ft(
         parent,
@@ -55,8 +54,8 @@ def generate_room(
         height=height,
         depth=wall_thickness,
         z=height / 2 + z,
-        y=math.half(math.pos_neg(depth)[
-            "pos"]) - math.half(wall_thickness)
+        y=math_extra.half(math_extra.pos_neg(depth)[
+            "pos"]) - math_extra.half(wall_thickness)
     )
     # South wall
     geom.cube_ft(
@@ -66,7 +65,7 @@ def generate_room(
         height=height,
         depth=wall_thickness,
         z=height / 2 + z,
-        y=math.half(math.pos_neg(depth)["neg"]) + math.half(wall_thickness))
+        y=math_extra.half(math_extra.pos_neg(depth)["neg"]) + math_extra.half(wall_thickness))
     # Floor
     geom.cube_ft(
         parent,
@@ -84,11 +83,7 @@ def generate_building(
     floors=1
 ):
     def generate(data):
-
-        with open(data, newline='') as csvfile:
-            model_reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            for row in model_reader:
-                print(', '.join(row))
+        rooms.load(data)
 
         bpy.ops.object.empty_add(
             type='PLAIN_AXES',

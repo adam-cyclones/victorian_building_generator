@@ -1,9 +1,9 @@
 room,type,min_width,max_width,min_depth,max_depth,exists,floor,doors,window_width,window_height,objects,light_sources,activities
-Living Room,common,14,22,14,22,80,1,1,5,7,"couch, coffee table, bookshelf, fireplace, rug","lamps, candles, fireplace","relaxing, entertaining guests, reading"
-Dining Room,common,14,20,14,20,80,1,1,5,7,"dining table, chairs, china cabinet, rug, fireplace","lamps, candles, fireplace","eating meals, entertaining guests"
+Living_Room,common,14,22,14,22,80,1,1,5,7,"couch, coffee table, bookshelf, fireplace, rug","lamps, candles, fireplace","relaxing, entertaining guests, reading"
+Dining_Room,common,14,20,14,20,80,1,1,5,7,"dining table, chairs, china cabinet, rug, fireplace","lamps, candles, fireplace","eating meals, entertaining guests"
 Kitchen,common,14,22,14,22,80,1,1,4,5,"stove, sink, cabinets, worktops, ice box, fireplace","lamps, candles, fireplace","preparing and cooking meals, storing food"
 Bedroom,private,12,16,14,20,80,1,1,4,5,"bed, dresser, nightstand, lamp, fireplace","lamps, candles, fireplace","sleeping, dressing, relaxing, intimate activities"
-Master Bedroom,private,16,22,14,20,80,1,1,5,7,"bed, dresser, nightstands, lamp, armchair, fireplace","lamps, candles, fireplace","sleeping, dressing, relaxing, intimate activities"
+Master_Bedroom,private,16,22,14,20,80,1,1,5,7,"bed, dresser, nightstands, lamp, armchair, fireplace","lamps, candles, fireplace","sleeping, dressing, relaxing, intimate activities"
 Children's Bedroom,private,12,14,12,14,80,1,1,4,5,"bed, dresser, nightstand, lamp, rug, toys","lamps, candles","sleeping, playing"
 Bathroom,private,8,14,8,14,80,1,1,3,3,"sink, toilet, tub, rug","lamps, candles","bathing, grooming"
 WC,private,5,8,5,8,80,1,1,2,2,"toilet, sink, rug","lamps, candles","using the toilet"

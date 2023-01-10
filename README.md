@@ -5,6 +5,20 @@ A Blender script for generating buildings in the style of late Victorian rural E
 > Work in progress, Today you can generate `n` floors! thats it.
 >
 > A bin packing algorythm should now be developed including A\* to enisre a path, this is going to be hard! :D
+>
+> _Beep boop beep_ 🤖 Chat GPT says:
+>
+> A\* is a popular algorithm for pathfinding, while bin packing is a problem of efficiently allocating items into a fixed number of containers (bins) with specific constraints. Combining the two algorithms can be useful for finding an efficient layout for a floor plan that includes both rooms and corridors.
+>
+> Here's one way you could go about combining the two algorithms:
+>
+> First, use a bin packing algorithm to determine the placement of rooms within the floor plan. This could involve dividing the floor plan into a grid of cells and placing each room into a set of cells that best fits its dimensions, subject to any additional constraints (such as minimum distances between rooms).
+>
+> Once you have the room locations determined, use A* to find paths between the rooms. A* works by starting at a given starting point and expanding nodes in the direction of the goal while considering a heuristic function to estimate the distance between the current position and the goal. To create corridor between rooms you can use the algorithm to find paths between the center of the rooms.
+
+Once you have your path, you can start expanding the width of the path to generate the corridor, You will have to check the collision with the rooms and other corridors in order to avoid creating a corridor that intersect with a room or another corridor.
+
+Repeat the process 2 and 3 to create corridors between all the rooms.
 
 ![The basic output as it stands](./docs/screenshots/basic-room.png)
 _The basic output as it stands_
